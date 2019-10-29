@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>loggy</fullName>
+    <types>
+        <members>Log</members>
+        <members>Log_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Log_Event__e.Line__c</members>
+        <members>Log_Event__e.Message__c</members>
+        <members>Log_Event__e.Class__c</members>
+        <members>Log_Event__e.Context__c</members>
+        <members>Log_Event__e.Level__c</members>
+        <members>Log_Event__e.Method__c</members>
+        <members>Log_Event__e.User__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Log_Event__e</members>
+        <name>CustomObject</name>
+    </types>
+    <version>44.0</version>
+</Package>

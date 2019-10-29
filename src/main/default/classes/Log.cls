@@ -65,11 +65,11 @@ public with sharing class Log {
 		message = String.format(message, cast(values));
 
 		if(LOG_VIA_EVENTS) {
-			currentEvent = new Log__e();
-			currentEvent.txt_User__c = UserInfo.getUserId();
-			currentEvent.txl_Message__c = message;
-			currentEvent.txt_Level__c = level.name();
-			currentEvent.txt_Context__c = (contextId == null) ? THIS_CONTEXT : ''+contextId;
+			currentEvent = new Log_Event__e();
+			currentEvent.User__c = UserInfo.getUserId();
+			currentEvent.Message__c = message;
+			currentEvent.Level__c = level.name();
+			currentEvent.Context__c = (contextId == null) ? THIS_CONTEXT : ''+contextId;
 
 			populateLocation(currentEvent);
 
@@ -97,7 +97,7 @@ public with sharing class Log {
 	}
 
 
-	private static void populateLocation(Log__e logEvent) {
+	private static void populateLocation(Log_Event__e logEvent) {
 		// Note: Idea taken from https://salesforce.stackexchange.com/questions/153835
 		List<String> stacktrace = new DmlException().getStackTraceString().split('\n');
 
@@ -108,15 +108,15 @@ public with sharing class Log {
 				Boolean hasNamespace = String.isNotBlank(matcher.group(3));
 
 				if(hasNamespace) {
-					logEvent.txt_Class__c = (matcher.group(1).equals(ORG_NAMESPACE)) ? matcher.group(2) : matcher.group(1) + '.' + matcher.group(2);
-					logEvent.txt_Method__c = prettyMethod(matcher.group(3));
+					logEvent.Class__c = (matcher.group(1).equals(ORG_NAMESPACE)) ? matcher.group(2) : matcher.group(1) + '.' + matcher.group(2);
+					logEvent.Method__c = prettyMethod(matcher.group(3));
 				}
 				else {
-					logEvent.txt_Class__c = matcher.group(1);
-					logEvent.txt_Method__c = prettyMethod(matcher.group(2));
+					logEvent.Class__c = matcher.group(1);
+					logEvent.Method__c = prettyMethod(matcher.group(2));
 				}
 
-				logEvent.num_Line__c = Integer.valueOf(matcher.group(4));
+				logEvent.Line_Number__c = Integer.valueOf(matcher.group(4));
 
 				return;
 			}
@@ -131,12 +131,13 @@ public with sharing class Log {
 
 
 	private static Boolean logViaEvents() {
-		Settings__c settings = Settings__c.getValues(UserInfo.getUserId());
-		return (settings == null) ? false : (System.today() == settings.dat_LogViaEvents__c);
+		// Settings__c settings = Settings__c.getValues(UserInfo.getUserId());
+		// return (settings == null) ? false : (System.today() == settings.dat_LogViaEvents__c);
+		return true;
 	}
 
 
 	// Note: Required to allow testing
 	@TestVisible
-	private static Log__e currentEvent = null;
+	private static Log_Event__e currentEvent = null;
 }
