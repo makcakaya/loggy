@@ -1,5 +1,7 @@
-# Loggy: A logging framework forked from Apex Unified Logging 
+# Loggy
 Logging framework based on Salesfore Platform Events to overcome the limitations of `System.debug` logging.
+
+Forked from [Apex Unified Logging](https://github.com/rsoesemann/apex-unified-logging)
 
 ## Features: ##
  - Provides unified view of logs over transaction boundaries (a.k.a. execution contexts)
